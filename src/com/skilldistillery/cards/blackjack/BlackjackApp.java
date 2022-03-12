@@ -27,9 +27,16 @@ public class BlackjackApp {
 			deck.shuffle();
 
 			System.out.println();
+			BlackjackHand house = new BlackjackHand();
+			for (int i = 0; i < 2; i++) {
+				Card newCard = deck.dealCard();
+				house.cards.add(newCard);
+			}
 			System.out.println("Dealer hand:");
-			System.out.println("- QUEEN of Diamonds");
-			System.out.println("Dealer Total: 16");
+			for (Card card : house.cards) {
+				System.out.println("- " + card.toString());
+			}
+			System.out.println("Dealer Total: " + house.getHandValue());
 			System.out.println();
 
 			BlackjackHand hand = new BlackjackHand();
