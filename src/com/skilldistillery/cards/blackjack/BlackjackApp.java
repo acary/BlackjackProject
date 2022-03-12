@@ -98,11 +98,13 @@ public class BlackjackApp {
 						System.out.println("Blackjack! You won!");
 						System.out.println("********************************");
 						playing = false;
+						break;
 					} else if (hand.isBust()) {
 						System.out.println("********************************");
 						System.out.println("Busted! Game over.");
 						System.out.println("********************************");
 						playing = false;
+						break;
 					}
 				} else {
 					System.out.println("\nDealer stays.");
@@ -113,11 +115,13 @@ public class BlackjackApp {
 						System.out.println("Blackjack! You won!");
 						System.out.println("********************************");
 						playing = false;
+						break;
 					} else if (hand.isBust()) {
 						System.out.println("********************************");
 						System.out.println("Busted! Game over.");
 						System.out.println("********************************");
 						playing = false;
+						break;
 					}
 				}
 
