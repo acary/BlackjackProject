@@ -13,16 +13,15 @@ public class BlackjackApp {
 	}
 
 	public static void main(String[] args) {
+		System.out.println("********************************");
 		System.out.println("**** Welcome to the Casino! ****");
+		System.out.println("********************************");
 		System.out.println();
 		System.out.println("You are sitting at the Blackjack table.");
 
 		boolean playing = true;
 		do {
 			String input = null;
-			// System.out.println("Ready? Y or N");
-			// System.out.println();
-
 			Deck deck = new Deck();
 			deck.shuffle();
 
@@ -51,7 +50,24 @@ public class BlackjackApp {
 			}
 			System.out.println("Your Total: " + hand.getHandValue());
 
-			for(;;) {
+			// Check result after first hand
+			if (hand.isBlackjack()) {
+				System.out.println("\n********************************");
+				System.out.println("Blackjack! You won!");
+				System.out.println("********************************");
+				playing = false;
+				break;
+			} else if (hand.isBust()) {
+				System.out.println("\n********************************");
+				System.out.println("Busted! Game over.");
+				System.out.println("********************************");
+				playing = false;
+				break;
+			}
+
+			for (;;) {
+
+				// Your turn
 				try {
 					System.out.println();
 					System.out.println("Hit or Stay?");
@@ -59,7 +75,7 @@ public class BlackjackApp {
 					if (input.equalsIgnoreCase("hit")) {
 						Card newCard = deck.dealCard();
 						hand.cards.add(newCard);
-						System.out.println(newCard.toString() + "\n");
+						System.out.println("\n- " + newCard.toString() + "\n");
 						System.out.println("Your Total: " + hand.getHandValue());
 					} else if (input.equalsIgnoreCase("stay")) {
 						System.out.println("Staying.");
@@ -68,14 +84,58 @@ public class BlackjackApp {
 					continue;
 				}
 
-				if (hand.isBlackjack()) {
-					System.out.println("Blackjack! You won!");
-					playing = false;
-					break;
-				} else if (hand.isBust()) {
-					System.out.println("Busted! Game over.");
-					playing = false;
-					break;
+				// Dealer turn
+				if (house.getHandValue() < 17) {
+					System.out.println("\nDealer hits.");
+					Card houseCard = deck.dealCard();
+					house.addCard(houseCard);
+					System.out.println("\n- " + houseCard.toString());
+					System.out.println("Dealer Total: " + house.getHandValue());
+
+					// Check end game result
+					if (hand.isBlackjack()) {
+						System.out.println("\n********************************");
+						System.out.println("Blackjack! You won!");
+						System.out.println("********************************");
+						playing = false;
+					} else if (hand.isBust()) {
+						System.out.println("********************************");
+						System.out.println("Busted! Game over.");
+						System.out.println("********************************");
+						playing = false;
+					}
+				} else {
+					System.out.println("\nDealer stays.");
+
+					// Check end game result
+					if (hand.isBlackjack()) {
+						System.out.println("\n********************************");
+						System.out.println("Blackjack! You won!");
+						System.out.println("********************************");
+						playing = false;
+					} else if (hand.isBust()) {
+						System.out.println("********************************");
+						System.out.println("Busted! Game over.");
+						System.out.println("********************************");
+						playing = false;
+					}
+				}
+
+				// Check round result
+				if (input.equalsIgnoreCase("stay")) {
+					if (hand.getHandValue() >= house.getHandValue()) {
+						System.out.println("\n********************************");
+						System.out.println("You win!");
+						System.out.println("********************************");
+						playing = false;
+						break;
+					} else {
+						System.out.println("********************************");
+						System.out.println("Dealer wins.");
+						System.out.println("********************************");
+						playing = false;
+						break;
+					}
 				}
 			}
 
