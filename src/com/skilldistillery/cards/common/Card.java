@@ -20,6 +20,11 @@ public class Card {
 	public int getValue() {
 		return this.rank.getValue();
 	}
+	
+	// Added setter for soft Ace
+	public void setValue(int val) {
+		this.rank.value = val;
+	}
 
 	@Override
 	public int hashCode() {

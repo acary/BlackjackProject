@@ -24,11 +24,21 @@ public class BlackjackApp {
 			String input = null;
 			Deck deck = new Deck();
 			deck.shuffle();
-
 			System.out.println();
+			
+			// Deal house
 			BlackjackHand house = new BlackjackHand();
 			for (int i = 0; i < 2; i++) {
 				Card newCard = deck.dealCard();
+				
+				// Check for soft Ace
+				int newValue = newCard.getValue();
+				if ((house.getHandValue()) + newValue > 21) {
+					if (newValue == 11) {
+						newCard.setValue(1);
+					}
+				}
+				
 				house.cards.add(newCard);
 			}
 			System.out.println("Dealer hand:");
@@ -38,9 +48,19 @@ public class BlackjackApp {
 			System.out.println("Dealer Total: " + house.getHandValue());
 			System.out.println();
 
+			// Deal player
 			BlackjackHand hand = new BlackjackHand();
 			for (int i = 0; i < 2; i++) {
 				Card newCard = deck.dealCard();
+				
+				// Check for soft Ace
+				int newValue = newCard.getValue();
+				if ((hand.getHandValue()) + newValue > 21) {
+					if (newValue == 11) {
+						newCard.setValue(1);
+					}
+				}
+				
 				hand.cards.add(newCard);
 			}
 
@@ -64,10 +84,10 @@ public class BlackjackApp {
 				playing = false;
 				break;
 			}
-			
+
 			if (house.isBlackjack()) {
 				System.out.println("\n********************************");
-				System.out.println("Dealer wins with Blackjack. Game over.");
+				System.out.println("Dealer wins with Blackjack.");
 				System.out.println("********************************");
 				playing = false;
 				break;
@@ -79,7 +99,6 @@ public class BlackjackApp {
 				break;
 			}
 
-
 			for (;;) {
 
 				// Your turn
@@ -89,6 +108,15 @@ public class BlackjackApp {
 					input = sc.next();
 					if (input.equalsIgnoreCase("hit")) {
 						Card newCard = deck.dealCard();
+
+						// Check for soft Ace
+						int newValue = newCard.getValue();
+						if ((hand.getHandValue()) + newValue > 21) {
+							if (newValue == 11) {
+								newCard.setValue(1);
+							}
+						}
+
 						hand.cards.add(newCard);
 						System.out.println("\nDraw:\n- " + newCard.toString() + " (" + newCard.getValue() + ")");
 						System.out.println("Your Total: " + hand.getHandValue());
@@ -104,10 +132,19 @@ public class BlackjackApp {
 					System.out.println("\nDealer hits.");
 					Card houseCard = deck.dealCard();
 					house.cards.add(houseCard);
-					System.out.println("\n- " + houseCard.toString() + " (" + houseCard.getValue() + ")");
+					System.out.println("- " + houseCard.toString() + " (" + houseCard.getValue() + ")");
 					System.out.println("Dealer Total: " + house.getHandValue());
 
-					// Check end game result
+					// Check if both bust
+					if (hand.isBust() && house.isBust()) {
+						System.out.println("\n********************************");
+						System.out.println("All Players Busted! No winner.");
+						System.out.println("********************************");
+						playing = false;
+						break;
+					}
+					
+					// Check player hand
 					if (hand.isBlackjack()) {
 						System.out.println("\n********************************");
 						System.out.println("Blackjack! You win! (" + hand.getHandValue() + ")");
@@ -121,8 +158,8 @@ public class BlackjackApp {
 						playing = false;
 						break;
 					}
-					
-					// Check dealer
+
+					// Check dealer hand
 					if (house.isBlackjack()) {
 						System.out.println("\n********************************");
 						System.out.println("Dealer has Blackjack. House wins.");
@@ -137,9 +174,18 @@ public class BlackjackApp {
 						break;
 					}
 				} else {
-					System.out.println("\nDealer stays.");
+					System.out.println("\nDealer stays (" + house.getHandValue() + ")");
 
-					// Check end game result
+					// Check if both bust
+					if (hand.isBust() && house.isBust()) {
+						System.out.println("\n********************************");
+						System.out.println("All Players Busted! No winner.");
+						System.out.println("********************************");
+						playing = false;
+						break;
+					}
+					
+					// Check player hand
 					if (hand.isBlackjack()) {
 						System.out.println("\n********************************");
 						System.out.println("Blackjack! You win!");
@@ -147,7 +193,7 @@ public class BlackjackApp {
 						playing = false;
 						break;
 					} else if (hand.isBust()) {
-						System.out.println("********************************");
+						System.out.println("\n********************************");
 						System.out.println("Busted! Dealer wins. Game over.");
 						System.out.println("********************************");
 						playing = false;
@@ -157,6 +203,17 @@ public class BlackjackApp {
 
 				// Check round result
 				if (input.equalsIgnoreCase("stay")) {
+					
+					// Check if both bust
+					if (hand.isBust() && house.isBust()) {
+						System.out.println("\n********************************");
+						System.out.println("All Players Busted! No winner.");
+						System.out.println("********************************");
+						playing = false;
+						break;
+					}
+					
+					// Compare hands
 					if (hand.getHandValue() >= house.getHandValue()) {
 						System.out.println("\n********************************");
 						System.out.println("You win!" + " (" + hand.getHandValue() + ")");
