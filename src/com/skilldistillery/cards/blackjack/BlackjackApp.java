@@ -73,7 +73,7 @@ public class BlackjackApp {
 				break;
 			} else if (house.isBust()) {
 				System.out.println("\n********************************");
-				System.out.println("Dealer busted. You win!");
+				System.out.println("Dealer busted. You win! (" + hand.getHandValue() + ")");
 				System.out.println("********************************");
 				playing = false;
 				break;
@@ -90,7 +90,7 @@ public class BlackjackApp {
 					if (input.equalsIgnoreCase("hit")) {
 						Card newCard = deck.dealCard();
 						hand.cards.add(newCard);
-						System.out.println("\n- " + newCard.toString() + " (" + newCard.getValue() + ")");
+						System.out.println("\nDraw:\n- " + newCard.toString() + " (" + newCard.getValue() + ")");
 						System.out.println("Your Total: " + hand.getHandValue());
 					} else if (input.equalsIgnoreCase("stay")) {
 						System.out.println("Staying.");
@@ -110,7 +110,7 @@ public class BlackjackApp {
 					// Check end game result
 					if (hand.isBlackjack()) {
 						System.out.println("\n********************************");
-						System.out.println("Blackjack! You win!");
+						System.out.println("Blackjack! You win! (" + hand.getHandValue() + ")");
 						System.out.println("********************************");
 						playing = false;
 						break;
