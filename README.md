@@ -12,7 +12,6 @@ After the initial hand is dealt, the player chooses to `hit` or `stay`.
 #### Soft Ace
 - If the player draws an Ace that would otherwise cause them to bust, the `soft Ace` value is used (`1` versus `11`)
 
-
 The player with the highest score without busting wins.
 
 ##### Running the program:
@@ -20,6 +19,17 @@ The player with the highest score without busting wins.
 - Import project into Eclipse
 - Compile and run main in `BlackjackApp.java`
 ```
+
+### Classes
+
+- `BlackjackApp`: runs the game
+- `BlackjackHand`: extends `Hand`
+	- Has methods to check `isBlackjack` and `isBust`
+- `Hand`: abstract class with list for current hand
+- `Deck`: list containing 52 cards simulating real deck
+- `Card`: object holding suit and rank
+- `Suit`: enumeration for four suits (♠ ♡ ♣ ♢)
+- `Rank`: enumeration for card values (2-11)
 
 ### Lessons Learned
 
