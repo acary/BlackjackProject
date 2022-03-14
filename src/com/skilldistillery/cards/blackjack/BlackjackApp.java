@@ -221,7 +221,7 @@ public class BlackjackApp {
 						playing = false;
 						break;
 					} else {
-						System.out.println("********************************");
+						System.out.println("\n********************************");
 						System.out.println("Dealer wins " + " (" + house.getHandValue() + ")");
 						System.out.println("********************************");
 						playing = false;

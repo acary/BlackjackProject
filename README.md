@@ -4,10 +4,14 @@
 
 This application is a single-player game of Blackjack.
 
-After the initial hand is dealt, the user choose to `hit` or `stay`.
+After the initial hand is dealt, the player chooses to `hit` or `stay`.
 
-- If the user's hand equals `21`, the user wins.
-- If the user's hand exceeds `21`, the user busts and loses.
+- If the player hand equals `21`, the player wins.
+- If the player hand exceeds `21`, the player busts and loses.
+
+#### Soft Ace
+- If the player draws an Ace that would otherwise cause them to bust, the `soft Ace` value is used (`1` versus `11`)
+
 
 The player with the highest score without busting wins.
 
